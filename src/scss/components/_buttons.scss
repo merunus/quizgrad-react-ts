@@ -1,0 +1,263 @@
+@import "../variables";
+
+.button {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color $duration ease-in-out,
+    border-color $duration ease-in-out;
+
+  &--landingHeader {
+    color: $main-blue;
+    border: 2px solid $main-blue;
+    font-weight: 600;
+    font-size: 1.2em;
+    &:hover {
+      background-color: $main-blue;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      font-weight: 500;
+      font-size: 0.8em;
+      margin-top: 10px;
+    }
+  }
+  &--landingDetails {
+    background-color: $main-blue;
+    color: #fff;
+    box-shadow: $main-blue 0px 10px 30px -10px;
+    margin-top: 50px;
+    font-size: 1.6em;
+    margin-left: 5px;
+    transition: transform $duration;
+    padding-bottom: 15px;
+    &:hover {
+      transform: scale(1.04);
+    }
+    &:active {
+      transform: scale((0.99));
+    }
+  }
+  &--registerButton {
+    background-color: $main-blue;
+    color: #fff;
+    font-size: 1.3em;
+    border-radius: 2px;
+
+    &__disabled {
+      opacity: 0.5;
+    }
+    @media (max-width: 500px) {
+      flex-direction: column;
+      width: 100%;
+      padding-left: 40%;
+    }
+  }
+  &--toggleBtn {
+    padding: 0;
+    border-color: transparent;
+    background: transparent;
+    font-size: 1.75rem;
+    color: $main-blue;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  &--logoutBtn {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.5rem;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    color: #fff;
+    background-color: $main-blue;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    border: transparent;
+    border-radius: 3px;
+    font-size: 1em;
+  }
+  &--dropdownBtn {
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+    text-transform: capitalize;
+    cursor: pointer;
+    // color: $main-blue;
+    color: $blue-gray;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: left;
+    font-size: 1em;
+    padding: 15px 15px 15px 15px;
+    &:hover {
+      background-color: rgb(248, 248, 248);
+      color: $font-black;
+    }
+    &--logout {
+      border-top: 0.0625rem solid #d8dee6;
+    }
+  }
+
+  &--closeSmallSidebar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border-color: transparent;
+    font-size: 2rem;
+    color: $font-black;
+    cursor: pointer;
+  }
+  &--createFormBtn {
+    padding: 10px 40px;
+    background-color: $darker-blue;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: 600;
+    @media (max-width: 520px) {
+      display: none;
+    }
+    &:hover {
+      background-color: #3d4abd;
+    }
+  }
+  &--createFormBtnBottom {
+    padding: 15px 40px;
+    background-color: $darker-blue;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1.5em;
+    font-weight: 600;
+    @media (max-width: 520px) {
+      width: 100%;
+    }
+  }
+  &--DeleteAllCarts {
+    display: flex;
+    align-items: center;
+    background-color: $snow-blue;
+    border-radius: 5px;
+    font-size: 1em;
+    color: $font-black;
+    border: 1px solid $main-blue;
+    transition: $transition;
+    font-weight: 500;
+    svg {
+      font-size: 1em;
+      margin-left: 4px;
+      margin-top: 3px;
+    }
+    &:hover {
+      background-color: rgb(191, 212, 248);
+    }
+  }
+  &--noModules {
+    width: 100%;
+    text-align: center;
+  }
+
+  &--singleModuleGoBack {
+    // background-color: $snow-blue;
+    background-color: #515ed7;
+    color: #fff;
+    // border: 1px solid $main-blue;
+    border-radius: 3px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    margin-top: 20px;
+    font-weight: 500;
+    padding-left: 10px;
+    svg {
+      font-size: 1.2em;
+      margin-right: 3px;
+    }
+    @media (max-width: 1200px) {
+      width: 15%;
+    }
+    @media (max-width: 640px) {
+      width: 25%;
+    }
+    @media (max-width: 430px) {
+      width: 100%;
+    }
+  }
+  &--editSingleModule {
+    @media (max-width: 500px) {
+      width: 100%;
+    }
+  }
+  &--editSingleWord {
+    text-align: center;
+    border-radius: 5px;
+    width: 35%;
+    justify-content: center;
+    margin-top: 15px;
+    @media (max-width: 450px) {
+      width: 200px;
+    }
+  }
+  &--backToModule {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    font-size: 1.1em;
+    svg {
+      font-size: 1.5em;
+      padding-top: 2px;
+      color: $darker-blue;
+    }
+    &:hover {
+      svg {
+        color: $main-blue;
+      }
+    }
+  }
+  &--nextQuestionBtn {
+    width: 100%;
+    margin-top: 15px;
+  }
+  &--resultButtons {
+    width: 250px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 500;
+    background-color: $darker-blue;
+    @media (max-width: 700px) {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+  }
+  &--updateProfileBtn {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin-top: 20px;
+    &:hover {
+      background-color: #3d4abd;
+    }
+    &__disabled {
+      opacity: 0.3;
+    }
+  }
+  &--deleteModuleBtn {
+    @media (max-width: 600px) {
+      margin-bottom: 20px;
+      
+    }
+    background-color: #e74c3c;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 15px;
+    font-weight: 500;
+    font-size: 1.1em;
+  }
+}

@@ -1,0 +1,153 @@
+.input {
+  outline: none;
+  padding: 15px 0px;
+
+  &__register {
+    width: 100%;
+    position: relative;
+    padding-left: 4em;
+    line-height: 1.4;
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    -webkit-transition: $duration ease-in-out;
+    -moz-transition: $duration ease-in-out;
+    -o-transition: $duration ease-in-out;
+    transition: $duration ease-in-out;
+    transition: all $duration ease-in-out;
+    font-size: 1em;
+
+    &:focus {
+      outline: 0;
+      border-color: $main-blue;
+      &::placeholder {
+        color: $main-blue;
+      }
+    }
+    &:focus + .input__icon {
+      outline: 0;
+      border-color: $main-blue;
+      color: $main-blue;
+    }
+  }
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2.6em;
+    height: 2.4em;
+    line-height: 2.6em;
+    font-size: 1.4em;
+    text-align: center;
+    transition: all $duration ease-in-out;
+    border-right: 1px solid #e5e5e5;
+  }
+  &__eye {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 2.6em;
+    height: 2.4em;
+    line-height: 2.6em;
+    font-size: 1.5em;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  &__createModule {
+    display: block;
+    width: 60%;
+    border: none;
+    padding: 10px 0;
+    background: transparent;
+    border-bottom: 2px solid $font-black;
+    font-size: 1.2em;
+    transition: $transition;
+    &:focus {
+      border-bottom: 2px solid $main-blue;
+    }
+    &::placeholder {
+      color: rgb(159, 159, 159);
+      font-weight: 300;
+    }
+    @media (max-width: 660px) {
+      width: 100%;
+      &::placeholder {
+        color: rgb(159, 159, 159);
+        font-weight: 300;
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  &__inputWords {
+    border: none;
+    width: 100%;
+    transition: $transition;
+    font-size: 1.3em;
+
+    border-bottom: 2px solid $font-black;
+    padding: 10px 0;
+    &:focus {
+      border-bottom: 2px solid $main-blue;
+    }
+  }
+
+  &__searchMyModules {
+    padding: 10px 15px;
+    border: none;
+    color: #646f90;
+    font-size: 1em;
+    width: 100%;
+    border-radius: 3px;
+    &::placeholder {
+      color: #646f90;
+      font-weight: 500;
+    }
+    &:focus {
+      border-bottom: 2px solid $main-blue;
+    }
+  }
+  &__searchAllModules {
+    padding: 10px 15px;
+    width: 100%;
+    border: 2px solid #e5e5e5;
+    border-radius: 3px;
+    -webkit-transition: $duration ease-in-out;
+    -moz-transition: $duration ease-in-out;
+    -o-transition: $duration ease-in-out;
+    transition: $duration ease-in-out;
+    transition: all $duration ease-in-out;
+    font-size: 1em;
+    padding-left: 3rem;
+    &:focus + .allModulesSearchIcon {
+      outline: 0;
+      border-color: $main-blue;
+      color: $main-blue;
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: $main-blue;
+    }
+  }
+  &__updateProfile {
+    padding: 10px 20px 10px 40px;
+    outline: none;
+    border: 1px solid $light-border;
+    width: 100%;
+    font-size: 1.1em;
+    border-radius: 5px;
+    transition: $transition;
+    color: $blue-dark-gray;
+    font-weight: 400;
+    &:focus {
+      border: 1px solid $main-blue;
+    }
+    &:focus + .updateProfileIcons {
+      color: $main-blue;
+    }
+  }
+}

@@ -1,0 +1,168 @@
+.createFormContainer {
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $background;
+    h1 {
+      font-size: 1.5em;
+      color: $font-black;
+      font-weight: 600;
+    }
+  }
+  &__formContainer {
+    margin-top: 35px;
+    label {
+      display: inline-block;
+      color: $font-gray;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+  }
+  .error {
+    width: 50%;
+    margin: 0 auto;
+    transition: opacity 300ms;
+    opacity: 0;
+    @media (max-width: 500px) {
+      width: 100%;
+    }
+    h4 {
+      border: 1px solid $error;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+      color: $error;
+      font-weight: 400;
+      padding: 5px 0;
+      transition: opacity 300ms;
+      span {
+        color: #cf5947;
+      }
+    }
+    &__active {
+      opacity: 1;
+      transition: opacity 300ms;
+    }
+  }
+}
+
+.createWordsContainer {
+  margin-top: 35px;
+  &__wordsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media (max-width: 464px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    h1 {
+      font-size: 1.5em;
+      color: $font-black;
+      font-weight: 600;
+      @media (max-width: 464px) {
+        margin-bottom: 40px;
+      }
+    }
+  }
+
+  &__wordsContainer {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.wordCartContainer {
+  background-color: #fff;
+  width: 100%;
+  box-shadow:$cart-shadow;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+
+  &__addWordCartContainer {
+    height: 140px;
+    position: relative;
+  }
+
+  &__addWordCart {
+    cursor: pointer;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid $main-blue;
+    &:hover {
+      h2 {
+        color: $main-blue;
+      }
+      svg {
+        color: $main-blue;
+      }
+    }
+    h2 {
+      transition: 0.1s ease-in-out all;
+      font-size: 1.3em;
+      text-transform: uppercase;
+      color: $font-black;
+      margin-bottom: 4px;
+      margin-left: 4px;
+      font-weight: 400;
+      @media (max-width: 400px) {
+        font-size: 1em;
+      }
+    }
+    svg {
+      transition: 0.1s ease-in-out all;
+      color: $font-black;
+      font-size: 1em;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid $background;
+    padding: 18px;
+    p {
+      color: $font-gray;
+    }
+    svg {
+      font-size: 1.1em;
+      cursor: pointer;
+      &:hover {
+        color: $main-blue;
+      }
+    }
+  }
+
+  .inputsContainer {
+    display: flex;
+    justify-content: space-between;
+
+    &__inputBlock {
+      margin-top: 25px;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+      label {
+        text-transform: uppercase;
+        display: inline-block;
+        color: $font-gray;
+        margin-bottom: 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+        margin-top: 2px;
+      }
+    }
+  }
+}

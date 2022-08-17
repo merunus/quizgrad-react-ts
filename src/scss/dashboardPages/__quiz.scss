@@ -1,0 +1,116 @@
+.quizContainer {
+  position: relative;
+  background-color: #fff;
+  box-shadow: $cart-shadow;
+  border-radius: 10px;
+  width: 85%;
+  margin: 0 auto;
+  padding: 30px;
+  @media (max-width: 570px) {
+    width: 100%;
+    padding: 15px;
+  }
+  &__question {
+    width: 100%;
+    text-align: center;
+    h5 {
+      font-size: 1.5em;
+      font-weight: 400;
+      color: $font-black;
+      margin: 100px 0 100px 0;
+    }
+  }
+  h1 {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-left: 7px;
+    color: $blue-dark-gray;
+  }
+  &__answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    @media (max-width: 570px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  &__option {
+    background-color: transparent;
+    border: 0.125rem solid #edeff4;
+    margin: 10px;
+    border-radius: 7px;
+    padding: 15px;
+    display: flex;
+    font-size: 1.1em;
+    align-items: center;
+    cursor: pointer;
+
+    span {
+      background-color: #edeff4;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      line-height: 25px;
+      color: $blue-dark-gray;
+      margin-right: 10px;
+      font-weight: 500;
+    }
+    h4 {
+      font-weight: 400;
+      color: $font-black;
+    }
+  }
+  &__result {
+    h1 {
+      font-size: 1.5em;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+.quizNextButtons {
+  width: 85%;
+  margin: 0 auto;
+}
+.quizResultButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 25px;
+
+  a {
+    color: #fff;
+    @media (max-width: 700px) {
+      width: 100%;
+    }
+  }
+  @media (max-width: 700px) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.correct {
+  border: 0.125rem solid #23b26d;
+  background-color: #f2fbf6;
+}
+.incorrect {
+  //   background-color: #f9c4be;
+  border: 0.125rem solid #ff9c8c;
+}
+
+.confetti {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}

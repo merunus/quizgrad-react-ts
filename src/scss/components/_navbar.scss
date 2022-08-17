@@ -1,0 +1,108 @@
+.navWrapper {
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  z-index: 99;
+
+  .nav-center {
+    display: flex;
+    width: 90vw;
+
+    align-items: center;
+    justify-content: space-between;
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      width: 130px;
+      @media (min-width: 992px) {
+        display: none;
+      }
+    }
+    &__logoText {
+      font-size: 1.8em;
+      font-weight: 400;
+      display: none;
+      margin: 0;
+      color: $font-black;
+      svg {
+        color: $main-blue;
+      }
+      @media (min-width: 992px) {
+        display: block;
+      }
+    }
+    .btn-container {
+      position: relative;
+
+      .dropdown {
+        position: absolute;
+        z-index: 100;
+
+        top: 35px;
+        // left: 0;
+        left: -112px;
+        // width: 100%;
+        width: 250px;
+        // padding: 0.5rem;
+        text-align: center;
+        visibility: hidden;
+        // background: $snow-blue;
+        background-color: #fff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        // border-radius: 0.25rem;
+
+        &__show {
+          visibility: visible;
+        }
+
+        .dropdownInfoContainer {
+          align-items: center;
+          display: flex;
+          width: 100%;
+          padding: 15px 15px 10px 15px;
+          svg {
+            width: 35px;
+            height: 35px;
+            font-size: 1.6em;
+          }
+          // border-bottom: 0.0625rem solid #d8dee6;
+          border: 0.0625rem solid #d8dee6;
+          border-radius: 3px 3px 0 0;
+          &__details {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            h4 {
+              text-align: left;
+              font-weight: 500;
+              color: $font-black;
+            }
+            p {
+              font-size: 0.8em;
+              color: $font-gray;
+            }
+          }
+        }
+        .dropdownLinksContainer {
+          display: flex;
+          flex-direction: column;
+          border: 0.0625rem solid #d8dee6;
+          border-top: none;
+        }
+      }
+    }
+
+    @media (min-width: 992px) {
+      width: 90%;
+    }
+  }
+  @media (min-width: 992px) {
+    position: sticky;
+    top: 0;
+  }
+}

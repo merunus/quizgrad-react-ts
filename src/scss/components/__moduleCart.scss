@@ -1,0 +1,81 @@
+.moduleCartContainer {
+  position: relative;
+  // max-width: 500px;
+  background-color: #fff;
+  box-shadow: $cart-shadow;
+  border-radius: 3px;
+  padding: 15px 15px;
+  &__header {
+    position: relative;
+    h1 {
+      font-size: 1.3em;
+      font-family: "Roboto", sans-serif;
+    }
+    h2 {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+      color: $font-black-secondary;
+      text-transform: capitalize;
+      svg {
+        font-size: 1.3em;
+        margin-right: 5px;
+      }
+    }
+  }
+  &__info {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    p {
+      color: $font-gray;
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+      svg {
+        margin-right: 2px;
+      }
+    }
+    span {
+      display: flex;
+      align-items: center;
+      svg {
+        font-size: 1.3em;
+        margin-right: 3px;
+      }
+    }
+  }
+  &:hover {
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background-color: $main-blue;
+    }
+  }
+}
+
+.cardSkeleton {
+  width: 100%;
+  height: 137px;
+  max-height: 137px;
+  box-shadow: $cart-shadow;
+
+  height: 100%;
+  background: #fff;
+  &__column {
+    position: relative;
+    padding: 15px 15px;
+
+    .bottomCont {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
