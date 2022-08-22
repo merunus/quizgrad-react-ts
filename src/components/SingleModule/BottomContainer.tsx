@@ -43,7 +43,7 @@ const BottomContainer: React.FC<TModule> = ({
             })}
       </div>
       <div>
-        {words?.length > 5 && (
+        {words?.length > 5 && isEditable &&(
           <Link to={`/create-module/${_id}`}>
             <button
               style={{ marginTop: "25px" }}
