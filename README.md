@@ -2,7 +2,6 @@
 Project created with React JS using template Create React App --Typescript and Redux Toolkit
 
 # Project Launch :
-Выполнить следующие команды в терминале: сперва npm install, затем npm start
 To start app write next commands in the console : npm install -> npm start
 
 # Main Libraries
