@@ -2,23 +2,19 @@ import React from "react";
 import { TModule } from "../../redux/module/types";
 import SMWordCart from "./SMWordCart";
 import { selectUserData } from "../../redux/user/selectors";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ModuleCartSkeleton } from "../MyModules";
 import SingleWordSkeleton from "./skeletons/SingleWordSkeleton";
 import { selectModuleData } from "../../redux/module/selectors";
+import { useAppSelector } from "../../redux/store";
+import { Endpoints } from "../../models/routes";
 const BottomContainer: React.FC<TModule> = ({
-  title,
   _id,
-  language,
-  viewsCount,
   words,
-  created,
   moduleId,
   moduleCreator,
 }) => {
-  const { isLoading } = useSelector(selectModuleData);
-  const { user } = useSelector(selectUserData);
+  const { isLoading } = useAppSelector(selectModuleData);
+  const { user } = useAppSelector(selectUserData);
   const isEditable = moduleCreator?.email === user?.email;
   return (
     <section className="singleModuleBottomContainer">
@@ -43,8 +39,8 @@ const BottomContainer: React.FC<TModule> = ({
             })}
       </div>
       <div>
-        {words?.length > 5 && isEditable &&(
-          <Link to={`/create-module/${_id}`}>
+        {words?.length > 5 && isEditable && (
+          <Link to={`${Endpoints.UpdateModule}/${_id}`}>
             <button
               style={{ marginTop: "25px" }}
               className="button button--createFormBtnBottom"

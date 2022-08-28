@@ -1,7 +1,7 @@
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { TModule } from "../../redux/module/types";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { Link, useNavigate } from "react-router-dom";
 import CarouselWordCart from "./CarouselWordCart";
@@ -9,14 +9,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import repetitionPic from "../../assets/images/repetitioPic.png";
+import repetitionPic from "../../assets/images/repetition-pic.png";
+import { Endpoints } from "../../models/routes";
 
-const MainContainer: React.FC<TModule> = ({
-  title,
-  _id,
-  words,
-}) => {
-  const swiper = useSwiper();
+const MainContainer: React.FC<TModule> = ({ title, _id, words }) => {
   const navigate = useNavigate();
 
   return (
@@ -40,16 +36,11 @@ const MainContainer: React.FC<TModule> = ({
       </header>
       <div className="wordsSliderContainerWrapper">
         <div className="testsCardsContainer">
-          {/* <Link to="#" className="testsCardsContainer__cardTest">
-            <img src={cardPic} />
-            <div>
-              <h4>Cards</h4>
-              <p>Review terms and definitions</p>
-            </div>
-          </Link> */}
-
-          <Link to={`/quiz/${_id}`} className="testsCardsContainer__cardTest">
-            <img src={repetitionPic} />
+          <Link
+            to={`${Endpoints.Quiz}/${_id}`}
+            className="testsCardsContainer__cardTest"
+          >
+            <img src={repetitionPic} alt="repetition-pic" />
             <div>
               <h4>Quiz</h4>
               <p>Solve quiz and learn faster!</p>
@@ -81,21 +72,11 @@ const MainContainer: React.FC<TModule> = ({
           <p>Tap on cart to see translate</p>
         </div>
         <div className="testsCardsContainer">
-          {/* <Link
-            to="#"
-            className="testsCardsContainer__cardTest testsCardsContainer__cardTest__bottom"
-          >
-            <img src={cardPic} />
-            <div>
-              <h4>Cards</h4>
-              <p>Review terms and definitions</p>
-            </div>
-          </Link> */}
           <Link
-            to={`/quiz/${_id}`}
+            to={`${Endpoints.Quiz}/${_id}`}
             className="testsCardsContainer__cardTest testsCardsContainer__cardTest__bottom"
           >
-            <img src={repetitionPic} />
+            <img src={repetitionPic} alt="repeat-pic" />
             <div>
               <h4>Quiz</h4>
               <p>Focus on your study module</p>

@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
+import Select, { StylesConfig } from "react-select";
 import debounce from "lodash.debounce";
 import { useAppDispatch } from "../../redux/store";
 import { clearSearchValue, setSearchValue } from "../../redux/filter/slice";
@@ -23,8 +23,9 @@ export type TOption = {
 
 const AllModulesSearch: React.FC = () => {
   const dispatch = useAppDispatch();
-  const colourStyles = {
-    control: (styles: any) => ({ ...styles, height: "45px" }),
+
+  const colorStyles: StylesConfig = {
+    control: (styles) => ({ ...styles, height: "45px" }),
   };
   const { register, handleSubmit, watch, control, setValue } = useForm<TSearch>(
     {
@@ -36,7 +37,7 @@ const AllModulesSearch: React.FC = () => {
     }
   );
 
-  const submitSearch = (data: TSearch, e: any) => {
+  const submitSearch = (data: TSearch) => {
     const { search } = data;
     dispatch(searchFilterAllModules(search));
     dispatch(setSearchValue(search));
@@ -46,7 +47,7 @@ const AllModulesSearch: React.FC = () => {
     debounce((str: string) => {
       handleSubmit(submitSearch)();
     }, 150),
-    []
+    [handleSubmit, dispatch]
   );
 
   const opt: TOption[] = [
@@ -106,15 +107,12 @@ const AllModulesSearch: React.FC = () => {
           <Controller
             control={control}
             name="sort"
-            render={({
-              field: { name, onChange, ref, value },
-              fieldState: { error },
-            }) => (
+            render={({ field: { onChange, value } }) => (
               <Select
                 placeholder="Sort Options"
                 options={opt}
                 value={getValue(value)}
-                styles={colourStyles}
+                styles={colorStyles}
                 defaultValue={opt[0]}
                 onChange={(newValue: any) => {
                   onChange((newValue as TOption).value);

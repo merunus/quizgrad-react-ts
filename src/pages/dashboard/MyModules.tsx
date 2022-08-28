@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { selectUserData } from "../../redux/user/selectors";
 import {
   ModuleCart,
   ModuleCartSkeleton,
   MyModulesSearch,
 } from "../../components/MyModules";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { fetchMyModules } from "../../redux/module/slice";
 import { selectModuleData } from "../../redux/module/selectors";
 import { TModule } from "../../redux/module/types";
@@ -15,16 +14,16 @@ import { selectFilterData } from "../../redux/filter/selectors";
 import { NoModules, NoMyModules } from "../../components/NotFoundError";
 
 const MyModules: React.FC = () => {
-  const { searchValue } = useSelector(selectFilterData);
-  const { user } = useSelector(selectUserData);
+  const { searchValue } = useAppSelector(selectFilterData);
+  const { user } = useAppSelector(selectUserData);
   const { totalMyModules, myModules, isLoading } =
-    useSelector(selectModuleData);
+    useAppSelector(selectModuleData);
   const dispatch = useAppDispatch();
   const { userName, _id } = user;
 
   useEffect(() => {
     if (!searchValue) dispatch(fetchMyModules(_id));
-  }, [searchValue]);
+  }, [_id, dispatch, searchValue]);
 
   const skeletons = [...new Array(totalMyModules)].map((_, index) => (
     <ModuleCartSkeleton key={index} />
@@ -51,7 +50,6 @@ const MyModules: React.FC = () => {
           </p>
           <hr />
         </div>
-
         {modulesMy.length >= 1 ? (
           <div className="myModulesContainer__myModules">{modulesMy}</div>
         ) : isLoading ? (

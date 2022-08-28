@@ -11,7 +11,7 @@ const SharedLayout: React.FC = () => {
     if (location.pathname !== "/all-modules") {
       dispatch(clearSearchValue());
     }
-  }, [location]);
+  }, [dispatch, location]);
 
   return (
     <section className="sharedLayotWrapper">

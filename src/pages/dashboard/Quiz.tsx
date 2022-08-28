@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectModuleData } from "../../redux/module/selectors";
 import { TWord } from "../../redux/module/types";
 import { Line } from "rc-progress";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ReactCanvasConfetti from "react-canvas-confetti";
+import { useAppSelector } from "../../redux/store";
+import { Endpoints } from "../../models/routes";
 
 export type TQuestion = {
   question: string;
@@ -14,25 +15,22 @@ export type TQuestion = {
   correctAnswer: [];
 };
 
+type TMakeShotOptions = {
+  spread?: number;
+  decay?: number;
+  scalar?: number;
+  startVelocity?: number;
+};
+
 const Quiz: React.FC = () => {
-  const { module } = useSelector(selectModuleData);
-  const navigate = useNavigate();
-  const [allTermins, setAllTermins] = useState<string[]>([]);
-  const [allTranslates, setAllTranslates] = useState<string[]>([]);
+  const { module } = useAppSelector(selectModuleData);
+  const allTerms: string[] = [];
+  const allTranslates: string[] = [];
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [questions, setQuestions] = useState<any>([]);
   const [selected, setSelected] = useState<string>();
   const [score, setScore] = useState(0);
   const [isResult, setIsResult] = useState(false);
-
-  const canvasStyles: any = {
-    position: "fixed",
-    pointerEvents: "none",
-    width: "100%",
-    height: "100%",
-    top: 0,
-    left: 0,
-  };
 
   const refAnimationInstance = useRef<any>(null);
 
@@ -40,14 +38,17 @@ const Quiz: React.FC = () => {
     refAnimationInstance.current = instance;
   }, []);
 
-  const makeShot = useCallback((particleRatio: any, opts: any) => {
-    refAnimationInstance.current &&
-      refAnimationInstance.current({
-        ...opts,
-        origin: { y: 0.7 },
-        particleCount: Math.floor(200 * particleRatio),
-      });
-  }, []);
+  const makeShot = useCallback(
+    (particleRatio: number, opts: TMakeShotOptions) => {
+      refAnimationInstance.current &&
+        refAnimationInstance.current({
+          ...opts,
+          origin: { y: 0.7 },
+          particleCount: Math.floor(200 * particleRatio),
+        });
+    },
+    []
+  );
 
   const fire = useCallback(() => {
     makeShot(0.25, {
@@ -89,7 +90,7 @@ const Quiz: React.FC = () => {
               question: item.translate,
               correctAnswer: item.word,
               allOptions: [
-                ...allTermins
+                ...allTerms
                   .sort(() => 0.5 - Math.random())
                   .filter((i) => i !== item.word)
                   .slice(0, 3),
@@ -138,6 +139,7 @@ const Quiz: React.FC = () => {
       setScore((prevValue) => prevValue + 1);
     }
   };
+
   const resetQuiz = () => {
     setIsResult(false);
     createQuestions();
@@ -150,17 +152,13 @@ const Quiz: React.FC = () => {
 
   useEffect(() => {
     if (module) {
-      module.words.map((word: TWord) => {
-        allTermins.push(word.word);
-      });
-      module.words.map((word: TWord) => {
-        allTranslates.push(word.translate);
-      });
+      module.words.map((word: TWord) => allTerms.push(word.word));
+      module.words.map((word: TWord) => allTranslates.push(word.translate));
       createQuestions();
     } else {
       console.log("no module");
     }
-  }, []);
+  }, [isResult]);
 
   return (
     <>
@@ -231,7 +229,7 @@ const Quiz: React.FC = () => {
       </div>
       {isResult && (
         <div className="quizResultButtons">
-          <Link to={`/module/${module._id}`}>
+          <Link to={`${Endpoints.SingleModule}/${module._id}`}>
             <button className="button  button--resultButtons">
               Back to module
             </button>

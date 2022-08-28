@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { AllModulesContainer } from "../../components/AllModules";
 import AllModulesSearch from "../../components/AllModules/AllModulesSearch";
 

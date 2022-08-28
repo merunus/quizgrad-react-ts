@@ -1,16 +1,16 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { selectUserData } from "../redux/user/selectors";
+import { useAppSelector } from "../redux/store";
+import { Endpoints } from "../models/routes";
 
 type TProtectedRouteProps = {
   children: JSX.Element;
 };
 
 const ProtectedRoute = ({ children }: TProtectedRouteProps) => {
-  const { user } = useSelector(selectUserData);
+  const { user } = useAppSelector(selectUserData);
   if (!user) {
-    return <Navigate to="/landing" />;
+    return <Navigate to={Endpoints.Landing} />;
   }
   return children;
 };

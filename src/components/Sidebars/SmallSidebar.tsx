@@ -1,14 +1,13 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { selectModuleData } from "../../redux/module/selectors";
 import { toggleSidebar } from "../../redux/module/slice";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import Logo from "../Logo";
 import SidebarLinks from "../SidebarLinks";
 
 const SmallSidebar: React.FC = () => {
-  const { isSidebarOpen } = useSelector(selectModuleData);
+  const { isSidebarOpen } = useAppSelector(selectModuleData);
   const dispatch = useAppDispatch();
   const toggle = () => {
     dispatch(toggleSidebar());

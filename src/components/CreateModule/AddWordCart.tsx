@@ -1,9 +1,10 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
+import { TWord } from "./WordCart";
 
 export type TAddWordCartProps = {
-  append?: any;
+  append: (object: TWord) => void;
 };
 
 const AddWordCart: React.FC<TAddWordCartProps> = React.memo(({ append }) => {
@@ -12,7 +13,7 @@ const AddWordCart: React.FC<TAddWordCartProps> = React.memo(({ append }) => {
       <div
         className="wordCartContainer__addWordCart"
         onClick={() => {
-          append({ wordId: uuidv4() });
+          append({ wordId: uuidv4(), word: "", translate: "" });
         }}
       >
         <AiOutlinePlus />

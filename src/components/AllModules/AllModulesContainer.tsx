@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { selectModuleData } from "../../redux/module/selectors";
 import { fetchAllModules } from "../../redux/module/slice";
 import { TModule } from "../../redux/module/types";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import ModuleCart from "./ModuleCart";
 import ModuleCartSkeleton from "./ModuleCartSkeleton";
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import { selectFilterData } from "../../redux/filter/selectors";
 import { NoModules } from "../NotFoundError";
-
 const AllModulesContainer: React.FC = () => {
-  const { totalModules, modules, isLoading } = useSelector(selectModuleData);
-  const { searchValue } = useSelector(selectFilterData);
+  const { totalModules, modules, isLoading } = useAppSelector(selectModuleData);
+  const { searchValue } = useAppSelector(selectFilterData);
   const [isGrid, setIsGrid] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!searchValue) dispatch(fetchAllModules());
-  }, [searchValue]);
+  }, [dispatch, searchValue]);
 
   const skeletons = [...new Array(totalModules)].map((_, index) => (
     <ModuleCartSkeleton key={index} />
@@ -61,7 +59,10 @@ const AllModulesContainer: React.FC = () => {
         >
           {allModules}
         </div>
-      ) : isLoading ? (
+      ) : (
+        <NoModules />
+      )}
+      {isLoading && (
         <div
           className={
             isGrid ? "modules modules--gridView" : "modules modules--listView"
@@ -69,8 +70,6 @@ const AllModulesContainer: React.FC = () => {
         >
           {skeletons}
         </div>
-      ) : (
-        <NoModules />
       )}
     </section>
   );

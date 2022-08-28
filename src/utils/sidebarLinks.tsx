@@ -1,6 +1,4 @@
-import { IoBarChartSharp } from "react-icons/io5";
 import { MdQueryStats } from "react-icons/md";
-import { FaWpforms, FaListAlt } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { BsLayoutTextWindowReverse } from "react-icons/bs";
 import { IoMdCreate } from "react-icons/io";
@@ -16,7 +14,6 @@ const links: TLinks[] = [
     id: 1,
     text: "My modules",
     path: "/",
-    // icon: <IoBarChartSharp />,
     icon: <BsLayoutTextWindowReverse />,
   },
   {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import notFoundImage from "../../assets/images/nomodules.svg";
+import { Endpoints } from "../../models/routes";
 
 const NoMyModules: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const NoMyModules: React.FC = () => {
         <h1>You don't have any modules</h1>
         <Link
           style={{ display: "block" }}
-          to="/create-module"
+          to={Endpoints.CreateModule}
           className="button--createFormBtn button--noModules"
         >
           Create Module

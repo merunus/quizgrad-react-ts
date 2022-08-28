@@ -12,11 +12,7 @@ export type TMySearch = {
 
 const MyModulesSearch: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {
-    register,
-    watch,
-    setValue,
-  } = useForm<TMySearch>({
+  const { register, watch, setValue } = useForm<TMySearch>({
     mode: "onChange",
   });
 
@@ -25,12 +21,10 @@ const MyModulesSearch: React.FC = () => {
       <input
         {...register("searchMy")}
         autoComplete="off"
-        onChange={(e) => {
-          {
-            setValue("searchMy", e.target.value);
-            dispatch(setSearchValue(e.target.value));
-            dispatch(searchFilterMyModules(e.target.value));
-          }
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setValue("searchMy", e.target.value);
+          dispatch(setSearchValue(e.target.value));
+          dispatch(searchFilterMyModules(e.target.value));
         }}
         className="input input__searchMyModules"
         placeholder="Search Module"

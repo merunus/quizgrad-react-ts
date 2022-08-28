@@ -4,16 +4,16 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { TWord } from "../../redux/module/types";
 import { v4 as uuidv4 } from "uuid";
 import { FiDelete } from "react-icons/fi";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import customAxios from "../../utils/customAxios";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { fetchSingleModule } from "../../redux/module/slice";
-import { useSelector } from "react-redux";
 import { selectModuleData } from "../../redux/module/selectors";
 import { BsArrowLeftShort } from "react-icons/bs";
+import { validationSchema } from "../../validation/createModuleValidation";
+
 export interface IModuleCreationFields {
   title: string;
   language: string;
@@ -21,40 +21,25 @@ export interface IModuleCreationFields {
 }
 
 const CreateModule: React.FC = () => {
-  const { module } = useSelector(selectModuleData);
+  const { module } = useAppSelector(selectModuleData);
   const dispatch = useAppDispatch();
   const { id: paramId } = useParams();
   const isMounted = useRef(false);
   const navigate = useNavigate();
-  const validationSchema = yup.object().shape({
-    title: yup.string().max(40).required(),
-    language: yup.string().max(20).required(),
-    words: yup
-      .array()
-      .min(2)
-      .of(
-        yup.object().shape({
-          word: yup.string().required(),
-          translate: yup.string().required(),
-        })
-      ),
-  });
 
   const {
     register,
     handleSubmit,
-    watch,
     control,
-    reset,
     setFocus,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<IModuleCreationFields>({
     mode: "onChange",
     resolver: yupResolver(validationSchema),
   });
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray<
+  const { fields, append, prepend, remove } = useFieldArray<
     IModuleCreationFields,
     "words",
     "wordId"
@@ -103,14 +88,14 @@ const CreateModule: React.FC = () => {
     setTimeout(() => {
       setFocus("title");
     }, 10);
-  }, []);
+  }, [setFocus]);
 
   useEffect(() => {
     paramId && dispatch(fetchSingleModule(paramId));
     if (paramId) {
       setValue("title", module?.title);
       setValue("language", module?.language);
-      module?.words?.map((item: TWord) => {
+      module?.words?.forEach((item: TWord) => {
         const wordItem = {
           wordId: item.wordId,
           word: item.word,
@@ -130,7 +115,7 @@ const CreateModule: React.FC = () => {
       appendFirstTwoCarts();
     }
     isMounted.current = true;
-  }, []);
+  }, [append, paramId]);
 
   return (
     <>

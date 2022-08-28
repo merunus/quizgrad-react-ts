@@ -1,8 +1,9 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { Endpoints } from "../../models/routes";
 import { TModule } from "../../redux/module/types";
+import { useAppSelector } from "../../redux/store";
 import { selectUserData } from "../../redux/user/selectors";
 import customAxios from "../../utils/customAxios";
 
@@ -11,14 +12,14 @@ const MiddleContainer: React.FC<TModule> = ({
   created,
   moduleCreator,
 }) => {
-  const { user } = useSelector(selectUserData);
+  const { user } = useAppSelector(selectUserData);
   const navigate = useNavigate();
   const isEditable = moduleCreator?.email === user?.email;
 
   const handleDeleteModule = async () => {
     if (window.confirm("Are you sure you want to delete this module?")) {
       await customAxios.delete(`/modules/delete/${_id}`);
-      navigate("/");
+      navigate(Endpoints.Home);
     }
   };
 
@@ -47,7 +48,7 @@ const MiddleContainer: React.FC<TModule> = ({
           >
             Delete Module
           </button>
-          <Link to={`/create-module/${_id}`}>
+          <Link to={`${Endpoints.UpdateModule}/${_id}`}>
             <button
               style={{ display: "block" }}
               className="button button--createFormBtn button--editSingleModule"
@@ -60,5 +61,6 @@ const MiddleContainer: React.FC<TModule> = ({
     </section>
   );
 };
+
 
 export default MiddleContainer;

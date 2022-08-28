@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { selectModuleData } from "../../redux/module/selectors";
 import { fetchMyModules } from "../../redux/module/slice";
-import { useAppDispatch } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { selectUserData } from "../../redux/user/selectors";
 import { updateUser } from "../../redux/user/slice";
 
@@ -15,22 +14,26 @@ interface IUpdateProfileFields {
 
 const Profile = () => {
   const dispatch = useAppDispatch();
-  const { totalMyModules, myModules } = useSelector(selectModuleData);
+  const { totalMyModules, myModules } = useAppSelector(selectModuleData);
 
-  const wordsAmount = myModules.reduce((previousValue, currentValue) => {
-    return previousValue + currentValue.words.length;
-  }, 0);
+  const wordsAmount = useMemo(
+    () =>
+      myModules.reduce((previousValue, currentValue) => {
+        return previousValue + currentValue.words.length;
+      }, 0),
+    [myModules]
+  );
 
-  const { user } = useSelector(selectUserData);
+  const { user } = useAppSelector(selectUserData);
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isDirty },
   } = useForm<IUpdateProfileFields>({
     mode: "onChange",
   });
 
-  const sumbitUpdateProfile: SubmitHandler<IUpdateProfileFields> = (
+  const submitUpdateProfile: SubmitHandler<IUpdateProfileFields> = (
     data: IUpdateProfileFields
   ) => {
     const { newUsername, newEmail } = data;
@@ -40,7 +43,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchMyModules(user._id));
-  }, []);
+  }, [dispatch, user._id]);
   return (
     <section className="profileContainer">
       <div className="profileContainer__settings">
@@ -48,7 +51,7 @@ const Profile = () => {
           <h4>Profile Settings</h4>
         </header>
         <div>
-          <form onSubmit={handleSubmit(sumbitUpdateProfile)}>
+          <form onSubmit={handleSubmit(submitUpdateProfile)}>
             <div className="settingsBlock">
               <label htmlFor="newUsername">User Name</label>
               <div className="settingsBlock__input">

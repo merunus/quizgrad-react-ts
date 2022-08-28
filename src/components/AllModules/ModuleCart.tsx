@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { TWord } from "../../redux/module/types";
 import { IoLanguageOutline } from "react-icons/io5";
 import { AiFillEye } from "react-icons/ai";
+import { Endpoints } from "../../models/routes";
 
 export type TUser = {
   _id: string;
@@ -35,7 +36,10 @@ const ModuleCart: React.FC<TModuleCartProps> = ({
   words,
 }) => {
   return (
-    <Link to={`/module/${_id}`} className="moduleCartContainer">
+    <Link
+      to={`${Endpoints.SingleModule}/${_id}`}
+      className="moduleCartContainer"
+    >
       <header className="moduleCartContainer__header">
         <h1>{title}</h1>
         <h2>

@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { Logo, FormRow } from "../components";
-import sideImage from "../assets/images/regImage.svg";
+import sideImage from "../assets/images/reg-image.svg";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useAppDispatch } from "../redux/store";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { selectUserData } from "../redux/user/selectors";
 import { fetchLogin, fetchRegister, toggleIsMember } from "../redux/user/slice";
 import { useNavigate } from "react-router-dom";
+import { Endpoints } from "../models/routes";
 
 export interface IFields {
   userName: string;
@@ -18,13 +18,12 @@ export interface IFields {
 }
 
 const Register: React.FC = () => {
-  const { isMember, user, isLoading } = useSelector(selectUserData);
+  const { isMember, user, isLoading } = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isValid },
   } = useForm<IFields>({
     mode: "onChange",
@@ -33,10 +32,10 @@ const Register: React.FC = () => {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate("/");
+        navigate(Endpoints.Home);
       }, 1500);
     }
-  }, [user]);
+  }, [navigate, user]);
 
   const handleIsMember = () => {
     dispatch(toggleIsMember());

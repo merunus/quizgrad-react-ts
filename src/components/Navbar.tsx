@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaAlignLeft, FaCaretDown, FaUserCircle } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/images/LogoFull.svg";
+import { Link } from "react-router-dom";
+import logo from "../assets/images/logo-full.svg";
+import { Endpoints } from "../models/routes";
 import { toggleSidebar } from "../redux/module/slice";
-import { useAppDispatch } from "../redux/store";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { selectUserData } from "../redux/user/selectors";
 import { logoutUser } from "../redux/user/slice";
 const Navbar: React.FC = () => {
   const {
     user: { userName, email },
-  } = useSelector(selectUserData);
-  const location = useLocation();
+  } = useAppSelector(selectUserData);
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -44,7 +43,7 @@ const Navbar: React.FC = () => {
           <FaAlignLeft />
         </button>
         <div>
-          <img src={logo} className="nav-center__logo" />
+          <img src={logo} className="nav-center__logo" alt = "centerlogo" />
           <h3 className="nav-center__logoText">Dashboard</h3>
         </div>
         <div ref={dropdownRef} className="btn-container">
@@ -75,7 +74,7 @@ const Navbar: React.FC = () => {
               <div className="dropdownLinksContainer">
                 <Link
                   onClick={() => setShowLogout(false)}
-                  to="/profile"
+                  to={Endpoints.Profile}
                   type="button"
                   className="button button--dropdownBtn button--dropdownBtn"
                 >
@@ -83,7 +82,7 @@ const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   onClick={() => setShowLogout(false)}
-                  to="/"
+                  to={Endpoints.Home}
                   type="button"
                   className="button button--dropdownBtn"
                 >
@@ -91,7 +90,7 @@ const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   onClick={() => setShowLogout(false)}
-                  to="/all-modules"
+                  to={Endpoints.AllModules}
                   type="button"
                   className="button button--dropdownBtn"
                 >
@@ -99,7 +98,7 @@ const Navbar: React.FC = () => {
                 </Link>
                 <Link
                   onClick={() => setShowLogout(false)}
-                  to="/create-module"
+                  to={Endpoints.CreateModule}
                   type="button"
                   className="button button--dropdownBtn"
                 >

@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { selectModuleData } from "../../redux/module/selectors";
+import { useAppSelector } from "../../redux/store";
 import Logo from "../Logo";
 import SidebarLinks from "../SidebarLinks";
 
 const BigSidebar: React.FC = () => {
-  const { isSidebarOpen } = useSelector(selectModuleData);
+  const { isSidebarOpen } = useAppSelector(selectModuleData);
 
   return (
     <aside className="bigSidebarWrapper">

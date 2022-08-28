@@ -10,12 +10,6 @@ import {
 import { IFields } from "../pages/Register";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
-type TError = {
-  type: string;
-  message: string;
-  ref: any;
-};
-
 type FormProps = {
   type: string;
   placeholder: string;
@@ -33,7 +27,6 @@ const FormRow: React.FC<FormProps> = ({
   placeholder,
   icon,
   register,
-  errors,
   name,
   rules,
   error,
