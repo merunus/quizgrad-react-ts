@@ -1,5 +1,4 @@
 import React from "react";
-import { TModule } from "../../redux/module/types";
 import SMWordCart from "./SMWordCart";
 import { selectUserData } from "../../redux/user/selectors";
 import { Link } from "react-router-dom";
@@ -7,7 +6,17 @@ import SingleWordSkeleton from "./skeletons/SingleWordSkeleton";
 import { selectModuleData } from "../../redux/module/selectors";
 import { useAppSelector } from "../../redux/store";
 import { Endpoints } from "../../models/routes";
-const BottomContainer: React.FC<TModule> = ({
+import { TWord } from "../CreateModule/WordCart";
+import { TUserData } from "../../redux/user/types";
+
+type TBottomContainer = {
+  _id?: string;
+  words?: TWord[];
+  moduleCreator?: TUserData;
+  moduleId?: string;
+};
+
+const BottomContainer: React.FC<TBottomContainer> = ({
   _id,
   words,
   moduleId,
@@ -39,7 +48,7 @@ const BottomContainer: React.FC<TModule> = ({
             })}
       </div>
       <div>
-        {words?.length > 5 && isEditable && (
+        {words && words?.length > 5 && isEditable && (
           <Link to={`${Endpoints.UpdateModule}/${_id}`}>
             <button
               style={{ marginTop: "25px" }}

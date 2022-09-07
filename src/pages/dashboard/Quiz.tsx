@@ -10,9 +10,9 @@ import { useAppSelector } from "../../redux/store";
 import { Endpoints } from "../../models/routes";
 
 export type TQuestion = {
+  allOptions: string[];
   question: string;
-  incorrectAnswers: string[];
-  correctAnswer: [];
+  correctAnswer: string;
 };
 
 type TMakeShotOptions = {
@@ -27,7 +27,7 @@ const Quiz: React.FC = () => {
   const allTerms: string[] = [];
   const allTranslates: string[] = [];
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [questions, setQuestions] = useState<any>([]);
+  const [questions, setQuestions] = useState<TQuestion[]>([]);
   const [selected, setSelected] = useState<string>();
   const [score, setScore] = useState(0);
   const [isResult, setIsResult] = useState(false);
@@ -55,24 +55,20 @@ const Quiz: React.FC = () => {
       spread: 26,
       startVelocity: 55,
     });
-
     makeShot(0.2, {
       spread: 60,
     });
-
     makeShot(0.35, {
       spread: 100,
       decay: 0.91,
       scalar: 0.8,
     });
-
     makeShot(0.1, {
       spread: 120,
       startVelocity: 25,
       decay: 0.92,
       scalar: 1.2,
     });
-
     makeShot(0.1, {
       spread: 120,
       startVelocity: 45,
@@ -175,7 +171,7 @@ const Quiz: React.FC = () => {
         {!isResult && <h1>Choose correct definition</h1>}
         <div className="quizContainer__answers">
           {questions[currentQuestion]?.allOptions?.map(
-            (item: any, index: number) => {
+            (item: string, index: number) => {
               return (
                 <button
                   disabled={selected ? true : false}
@@ -229,7 +225,7 @@ const Quiz: React.FC = () => {
       </div>
       {isResult && (
         <div className="quizResultButtons">
-          <Link to={`${Endpoints.SingleModule}/${module._id}`}>
+          <Link to={`${Endpoints.SingleModule}/${module && module._id}`}>
             <button className="button  button--resultButtons">
               Back to module
             </button>

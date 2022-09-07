@@ -114,7 +114,7 @@ const AllModulesSearch: React.FC = () => {
                 value={getValue(value)}
                 styles={colorStyles}
                 defaultValue={opt[0]}
-                onChange={(newValue: any) => {
+                onChange={(newValue: TOption | any) => {
                   onChange((newValue as TOption).value);
                   dispatch(sortAllModules(newValue.value));
                 }}

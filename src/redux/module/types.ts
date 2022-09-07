@@ -7,14 +7,15 @@ export type TWord = {
 };
 
 export type TModule = {
-  _id: string;
-  title: string;
-  language: string;
+  _id?: string;
+  title?: string;
+  language?: string;
   words: TWord[];
-  viewsCount: number;
+  viewsCount?: number;
   user: TUser;
   created?: string;
   moduleId?: string;
+  createdAt?: string;
   moduleCreator?: TUser;
 };
 
@@ -23,8 +24,8 @@ export interface IModuleSliceState {
   isEditing?: boolean;
   isDeleting?: boolean;
   isLoading: boolean;
-  module: TModule | any;
-  modules: TModule[] | any;
+  module: TModule | null;
+  modules: TModule[];
   totalModules: number;
   totalMyModules: number;
   myModules: TModule[];

@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { AxiosEndpoints } from "../../models/axios-routes";
 import customAxios from "../../utils/customAxios";
-import { IModuleSliceState, TParams } from "./types";
+import { IModuleSliceState, TModule, TParams } from "./types";
 
 export const fetchAllModules = createAsyncThunk(
   "module/fetchAllModules",
   async (_, thunkAPI) => {
     try {
-      const { data } = await customAxios.get(`/modules`);
+      const { data } = await customAxios.get(AxiosEndpoints.AllModules);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -18,7 +19,9 @@ export const fetchMyModules = createAsyncThunk(
   "module/fetchMyModules",
   async (userId: string, thunkAPI) => {
     try {
-      const { data } = await customAxios.get(`/modules/user/${userId}`);
+      const { data } = await customAxios.get(
+        `${AxiosEndpoints.MyModules}/${userId}`
+      );
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -30,7 +33,9 @@ export const fetchSingleModule = createAsyncThunk(
   "module/fetchSingleModule",
   async (moduleId: string, thunkAPI) => {
     try {
-      const { data } = await customAxios.get(`/modules/${moduleId}`);
+      const { data } = await customAxios.get(
+        `${AxiosEndpoints.AllModules}/${moduleId}`
+      );
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -43,7 +48,9 @@ export const deleteWord = createAsyncThunk(
   async (params: TParams, thunkAPI) => {
     const { moduleId, wordId } = params;
     try {
-      await customAxios.patch(`/modules/deleteWord/${moduleId}/${wordId}`);
+      await customAxios.patch(
+        `${AxiosEndpoints.DeleteWord}/${moduleId}/${wordId}`
+      );
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -55,10 +62,13 @@ export const editWord = createAsyncThunk(
   async (data: TParams, thunkAPI) => {
     const { moduleId, wordId, word, translate } = data;
     try {
-      await customAxios.patch(`/modules/editWord/${moduleId}/${wordId}`, {
-        word,
-        translate,
-      });
+      await customAxios.patch(
+        `${AxiosEndpoints.EditWord}/${moduleId}/${wordId}`,
+        {
+          word,
+          translate,
+        }
+      );
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -85,42 +95,55 @@ const moduleSlice = createSlice({
       state.isSidebarOpen = !state.isSidebarOpen;
     },
     searchFilterAllModules: (state, { payload }: PayloadAction<string>) => {
-      state.modules = state.modules.filter((module: any) =>
-        module.title.toLowerCase().startsWith(payload.toLocaleLowerCase())
-      );
+      state.modules = state.modules.filter((module: TModule) => {
+        if (module.title)
+          return module.title
+            .toLowerCase()
+            .startsWith(payload.toLocaleLowerCase());
+        return null;
+      });
       state.totalModules = state.modules.length;
     },
     searchFilterMyModules: (state, { payload }: PayloadAction<string>) => {
-      state.myModules = state.myModules.filter((module: any) =>
-        module.title.toLowerCase().startsWith(payload.toLocaleLowerCase())
-      );
+      state.myModules = state.myModules.filter((module: TModule) => {
+        if (module.title)
+          return module.title
+            .toLowerCase()
+            .startsWith(payload.toLocaleLowerCase());
+        return null;
+      });
       state.totalMyModules = state.myModules.length;
     },
 
     sortAllModules: (state, { payload }: PayloadAction<string>) => {
       if (payload === "oldest") {
         state.modules = state.modules.map((item: any) => {
-          return { ...item, createdAt: new Date(item.createdAt) };
+          if (item.createdAt)
+            return { ...item, createdAt: new Date(item.createdAt) };
+          return null;
         });
         state.modules.sort(
-          (objA: any, objB: any) =>
+          (objA: TModule, objB: TModule) =>
             Number(objA.createdAt) - Number(objB.createdAt)
         );
       } else if (payload === "latest") {
         state.modules = state.modules.map((item: any) => {
-          return { ...item, createdAt: new Date(item.createdAt) };
+          if (item.createdAt)
+            return { ...item, createdAt: new Date(item.createdAt) };
+          return null;
         });
         state.modules.sort(
-          (objA: any, objB: any) =>
+          (objA: TModule, objB: TModule) =>
             Number(objB.createdAt) - Number(objA.createdAt)
         );
       } else if (payload === "words") {
-        state.modules.sort(function (a: any, b: any) {
+        state.modules.sort((a: TModule, b: TModule) => {
           return b.words.length - a.words.length;
         });
       } else {
-        state.modules.sort(function (a: any, b: any) {
-          return b.viewsCount - a.viewsCount;
+        state.modules.sort((a: TModule, b: TModule) => {
+          if (a.viewsCount && b.viewsCount) return b.viewsCount - a.viewsCount;
+          return 0;
         });
       }
     },
@@ -128,7 +151,7 @@ const moduleSlice = createSlice({
   extraReducers: (builder) => {
     // Fetch All Modules
 
-    builder.addCase(fetchAllModules.pending, (state, action) => {
+    builder.addCase(fetchAllModules.pending, (state) => {
       state.isLoading = true;
       state.modules = [];
     });
@@ -140,12 +163,11 @@ const moduleSlice = createSlice({
     builder.addCase(fetchAllModules.rejected, (state, action) => {
       state.isLoading = false;
       state.modules = [];
-      console.log(action.payload);
     });
 
     // Fetch My Modules
 
-    builder.addCase(fetchMyModules.pending, (state, action) => {
+    builder.addCase(fetchMyModules.pending, (state) => {
       state.isLoading = true;
       state.myModules = [];
     });
@@ -154,14 +176,14 @@ const moduleSlice = createSlice({
       state.totalMyModules = action.payload.count;
       state.myModules = action.payload.modules;
     });
-    builder.addCase(fetchMyModules.rejected, (state, action) => {
+    builder.addCase(fetchMyModules.rejected, (state) => {
       state.isLoading = false;
       state.myModules = [];
     });
 
     // Fetch Single Module
 
-    builder.addCase(fetchSingleModule.pending, (state, action) => {
+    builder.addCase(fetchSingleModule.pending, (state) => {
       state.isLoading = true;
       state.module = null;
     });
@@ -169,27 +191,25 @@ const moduleSlice = createSlice({
       state.isLoading = false;
       state.module = action.payload;
     });
-    builder.addCase(fetchSingleModule.rejected, (state, action) => {
+    builder.addCase(fetchSingleModule.rejected, (state) => {
       state.isLoading = false;
       state.module = null;
     });
 
     // Delete word
-    builder.addCase(deleteWord.pending, (state, action) => {
+    builder.addCase(deleteWord.pending, (state) => {
       state.isDeleting = true;
     });
-    builder.addCase(deleteWord.fulfilled, (state, action) => {
+    builder.addCase(deleteWord.fulfilled, (state) => {
       state.isDeleting = false;
-      console.log("deleted");
     });
 
     // Edit Word
-    builder.addCase(editWord.pending, (state, action) => {
+    builder.addCase(editWord.pending, (state) => {
       state.isEditing = true;
     });
-    builder.addCase(editWord.fulfilled, (state, action) => {
+    builder.addCase(editWord.fulfilled, (state) => {
       state.isEditing = false;
-      console.log("edited");
     });
   },
 });

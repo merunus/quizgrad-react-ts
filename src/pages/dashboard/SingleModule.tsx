@@ -39,7 +39,7 @@ const SingleModule: React.FC = () => {
   return (
     <>
       <HistoryChain title={module?.title} language={module?.language} />
-      <MainContainer {...module} />
+      <MainContainer title={module?.title} _id = {module?._id} words = {module?.words} />
       <MiddleContainer {...module} moduleCreator={module?.user} />
       <BottomContainer moduleId={id} {...module} moduleCreator={module?.user} />
     </>

@@ -5,8 +5,8 @@ import { IModuleCreationFields } from "../../pages/dashboard/CreateModule";
 
 export type TWordCartProps = {
   register?: UseFormRegister<IModuleCreationFields>;
-  index?: any;
-  remove?: any;
+  index: number;
+  remove: (index: number | number[]) => void;
   word?: string;
   translate?: string;
 };

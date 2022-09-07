@@ -8,9 +8,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { selectUserData } from "../redux/user/selectors";
 import { logoutUser } from "../redux/user/slice";
 const Navbar: React.FC = () => {
-  const {
-    user: { userName, email },
-  } = useAppSelector(selectUserData);
+  const { user } = useAppSelector(selectUserData);
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -43,7 +41,7 @@ const Navbar: React.FC = () => {
           <FaAlignLeft />
         </button>
         <div>
-          <img src={logo} className="nav-center__logo" alt = "centerlogo" />
+          <img src={logo} className="nav-center__logo" alt="centerlogo" />
           <h3 className="nav-center__logoText">Dashboard</h3>
         </div>
         <div ref={dropdownRef} className="btn-container">
@@ -53,21 +51,22 @@ const Navbar: React.FC = () => {
             className="button button--logoutBtn"
           >
             <FaUserCircle />
-            {userName}
+            {user?.userName}
             <FaCaretDown />
           </button>
           {showLogout && (
-            <div
-              className="dropdown dropdown__show"
-            >
+            <div className="dropdown dropdown__show">
               <div className="dropdownInfoContainer">
                 <span>
                   <FaUserCircle />
                 </span>
                 <div className="dropdownInfoContainer__details">
-                  <h4>{userName}</h4>
+                  <h4>{user?.userName}</h4>
+
                   <p>
-                    {email.length > 5 ? `${email.substring(0, 15)}...` : email}
+                    {user && user.email.length > 5
+                      ? `${user.email.substring(0, 15)}...`
+                      : user?.email}
                   </p>
                 </div>
               </div>

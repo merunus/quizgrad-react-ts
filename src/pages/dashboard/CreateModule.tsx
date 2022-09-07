@@ -93,16 +93,18 @@ const CreateModule: React.FC = () => {
   useEffect(() => {
     paramId && dispatch(fetchSingleModule(paramId));
     if (paramId) {
-      setValue("title", module?.title);
-      setValue("language", module?.language);
-      module?.words?.forEach((item: TWord) => {
-        const wordItem = {
-          wordId: item.wordId,
-          word: item.word,
-          translate: item.translate,
-        };
-        prepend(wordItem);
-      });
+      if (module) {
+        module.title && setValue("title", module.title);
+        module.language && setValue("language", module.language);
+        module?.words?.forEach((item: TWord) => {
+          const wordItem = {
+            wordId: item.wordId,
+            word: item.word,
+            translate: item.translate,
+          };
+          prepend(wordItem);
+        });
+      }
     }
   }, []);
 
@@ -146,12 +148,13 @@ const CreateModule: React.FC = () => {
           onSubmit={handleSubmit(submitModule)}
           className="createFormContainer__formContainer"
         >
-          
           {/* Title/Language Forms */}
 
           <input
             {...register("title", { required: true })}
-            onBlur={(e: any) => setValue("title", e.target.value.trim())}
+            onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+              setValue("title", e.target.value.trim())
+            }
             className="input input__createModule"
             type="text"
             name="title"
@@ -164,7 +167,9 @@ const CreateModule: React.FC = () => {
             className="input input__createModule"
             type="text"
             id="language"
-            onBlur={(e: any) => setValue("language", e.target.value.trim())}
+            onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+              setValue("language", e.target.value.trim())
+            }
             placeholder="Enter language, for example, Italian"
             autoComplete="off"
           />

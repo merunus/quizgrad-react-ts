@@ -139,12 +139,20 @@ body {
       flex-direction: column;
       justify-content: center;
     }
+    &__googleBlock {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+      @media (max-width: 500px) {
+        justify-content: center;
+      }
+    }
     &__form {
       display: flex;
       flex-direction: column;
       justify-content: center;
       margin-top: 50px;
-      margin: 50px auto;
+      margin: 40px auto;
       max-width: 500px;
       .row {
         position: relative;

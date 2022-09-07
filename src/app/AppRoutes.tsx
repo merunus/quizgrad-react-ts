@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { Endpoints } from "./models/routes";
+import ProtectedRoute from "../components/ProtectedRoute";
+import { Endpoints } from "../models/routes";
 import {
   AllModules,
   CreateModule,
@@ -10,9 +10,9 @@ import {
   SingleModule,
   MyModules,
   Quiz,
-} from "./pages/dashboard";
-import Landing from "./pages/Landing";
-import Register from "./pages/Register";
+} from "../pages/dashboard";
+import Landing from "../pages/Landing";
+import Register from "../pages/Register";
 const AppRoutes: React.FC = () => {
   return (
     <Routes>

@@ -1,6 +1,5 @@
 import React from "react";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { TModule } from "../../redux/module/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,8 +10,19 @@ import "swiper/css/pagination";
 
 import repetitionPic from "../../assets/images/repetition-pic.png";
 import { Endpoints } from "../../models/routes";
+import { TWord } from "../CreateModule/WordCart";
 
-const MainContainer: React.FC<TModule> = ({ title, _id, words }) => {
+type TMainContainerProps = {
+  title?: string;
+  _id?: string;
+  words?: TWord[];
+};
+
+const MainContainer: React.FC<TMainContainerProps> = ({
+  title,
+  _id,
+  words,
+}) => {
   const navigate = useNavigate();
 
   return (

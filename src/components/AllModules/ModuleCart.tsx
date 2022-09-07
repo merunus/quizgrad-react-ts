@@ -17,11 +17,11 @@ export type TUser = {
 };
 
 export type TModuleCartProps = {
-  _id: string;
-  title: string;
+  _id?: string;
+  title?: string;
   user: TUser;
-  language: string;
-  words: TWord[];
+  language?: string;
+  words?: TWord[];
   viewsCount?: number;
   children?: JSX.Element | JSX.Element[];
 };
@@ -55,7 +55,7 @@ const ModuleCart: React.FC<TModuleCartProps> = ({
         </span>
 
         <p>
-          {words.length} word{words.length > 1 && "s"}
+          {words?.length} word{words && words.length > 1 && "s"}
         </p>
         <p>
           <AiFillEye />

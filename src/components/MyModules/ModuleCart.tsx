@@ -23,7 +23,7 @@ const ModuleCart: React.FC<TModuleCartProps> = ({
             <h2>{language}</h2>
           </span>
           <p>
-            {words.length} term{words.length > 1 && "s"}
+            {words?.length} term{words && words.length > 1 && "s"}
           </p>
         </div>
       </Link>

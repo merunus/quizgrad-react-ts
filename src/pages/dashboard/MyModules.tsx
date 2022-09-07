@@ -19,11 +19,11 @@ const MyModules: React.FC = () => {
   const { totalMyModules, myModules, isLoading } =
     useAppSelector(selectModuleData);
   const dispatch = useAppDispatch();
-  const { userName, _id } = user;
+  // const { userName, _id } = user;
 
   useEffect(() => {
-    if (!searchValue) dispatch(fetchMyModules(_id));
-  }, [_id, dispatch, searchValue]);
+    if (!searchValue && user) dispatch(fetchMyModules(user?._id));
+  }, [user?._id, dispatch, searchValue, user]);
 
   const skeletons = [...new Array(totalMyModules)].map((_, index) => (
     <ModuleCartSkeleton key={index} />
@@ -37,7 +37,7 @@ const MyModules: React.FC = () => {
     <section className="myModulesWrapper">
       <header className="myModulesWrapper__header">
         <FaUserCircle />
-        <h2>{userName}</h2>
+        <h2>{user?.userName}</h2>
       </header>
       <div className="myModulesContainer">
         <div className="myModulesContainer__top">

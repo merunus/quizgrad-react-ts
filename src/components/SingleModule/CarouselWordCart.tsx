@@ -9,7 +9,7 @@ interface ICarouselWordCart {
 const CarouselWordCart: React.FC<ICarouselWordCart> = ({ word, translate }) => {
   const [flipped, setFlipped] = useState(false);
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setFlipped((prevState) => !prevState);
   };

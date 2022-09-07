@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Endpoints } from "../../models/routes";
 export type THistoryChainProps = {
-  title: string;
-  language: string;
+  title?: string;
+  language?: string;
 };
 
 const HistoryChain: React.FC<THistoryChainProps> = ({ title, language }) => {

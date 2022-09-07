@@ -41,7 +41,6 @@ const SMWordCart: React.FC<TSMWordCart> = ({
           <span
             className={isWordsEditing ? "editWord isWordsEditing" : "editWord"}
             onClick={() => {
-              console.log("hey");
               setIsWordsEditing(!isWordsEditing);
             }}
           >
@@ -50,7 +49,6 @@ const SMWordCart: React.FC<TSMWordCart> = ({
           <span
             className={isDeletable ? "deleteWord" : "deleteWord notDeletable"}
             onClick={() => {
-              console.log("hey");
               if (wordId && moduleId) {
                 dispatch(deleteWord({ moduleId, wordId }));
               }

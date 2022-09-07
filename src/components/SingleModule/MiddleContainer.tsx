@@ -2,12 +2,18 @@ import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Endpoints } from "../../models/routes";
-import { TModule } from "../../redux/module/types";
 import { useAppSelector } from "../../redux/store";
 import { selectUserData } from "../../redux/user/selectors";
+import { TUserData } from "../../redux/user/types";
 import customAxios from "../../utils/customAxios";
 
-const MiddleContainer: React.FC<TModule> = ({
+type TMiddleContainerProps = {
+  _id?: string;
+  created?: string;
+  moduleCreator?: TUserData;
+};
+
+const MiddleContainer: React.FC<TMiddleContainerProps> = ({
   _id,
   created,
   moduleCreator,
@@ -61,6 +67,5 @@ const MiddleContainer: React.FC<TModule> = ({
     </section>
   );
 };
-
 
 export default MiddleContainer;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Logo, FormRow } from "../components";
+import { FormRow, Logo } from "../components";
 import sideImage from "../assets/images/reg-image.svg";
 import { BsFillPersonFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
@@ -7,9 +7,18 @@ import { FaKey } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { selectUserData } from "../redux/user/selectors";
-import { fetchLogin, fetchRegister, toggleIsMember } from "../redux/user/slice";
+import {
+  fetchGoogleAuth,
+  fetchLogin,
+  fetchRegister,
+  toggleIsMember,
+} from "../redux/user/slice";
 import { useNavigate } from "react-router-dom";
 import { Endpoints } from "../models/routes";
+import { BottomContainer } from "../components/Register";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+import { toast } from "react-toastify";
 
 export interface IFields {
   userName: string;
@@ -17,8 +26,25 @@ export interface IFields {
   password: string;
 }
 
+export type TGoogleResponse = {
+  aud?: string;
+  azp?: string;
+  email?: string;
+  email_verified?: boolean;
+  exp?: number;
+  family_name?: string;
+  given_name?: string;
+  iat?: number;
+  iss?: string;
+  jti?: string;
+  name?: string;
+  nbf?: number;
+  picture?: string;
+  sub?: string;
+};
+
 const Register: React.FC = () => {
-  const { isMember, user, isLoading } = useAppSelector(selectUserData);
+  const { isMember, user } = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -51,13 +77,25 @@ const Register: React.FC = () => {
     }
   };
 
+  const handleCredentials = (response: CredentialResponse) => {
+    if (response.credential) {
+      const decoded: { name: string; email: string; sub: string } = jwt_decode(
+        response.credential
+      );
+      if (decoded) {
+        const { email, name, sub } = decoded;
+        dispatch(fetchGoogleAuth({ email, userName: name, id: sub }));
+      }
+    }
+  };
+
   return (
     <div className="registerContainer">
       <div className="formContainer">
         <div className="formContainer__title">
           <Logo />
           <p>
-            Welcome back! <br />{" "}
+            Welcome back! <br />
             {isMember
               ? "Please Login to your account."
               : "Please Register your account."}
@@ -97,34 +135,25 @@ const Register: React.FC = () => {
             isPassword={true}
             rules={{ required: "You must enter your password" }}
           />
-
-          <div className="formContainer__bottomCont">
-            <button
-              disabled={!isValid || isLoading}
-              type="submit"
-              className={
-                isValid
-                  ? "button button--registerButton"
-                  : "button button--registerButton button--registerButton__disabled"
+          <BottomContainer handleIsMember={handleIsMember} isValid={isValid} />
+          <div className="formContainer__googleBlock">
+            <GoogleLogin
+              size="large"
+              onSuccess={(credentialResponse: CredentialResponse) =>
+                handleCredentials(credentialResponse)
               }
-            >
-              {isMember ? "Login" : "Signup"}
-            </button>
-            <h3>
-              {isMember ? "Not a member yet?" : "Already a member?"}
-              <button
-                disabled={isLoading}
-                onClick={handleIsMember}
-                type="button"
-              >
-                {!isMember ? "Login" : "Signup"}
-              </button>
-            </h3>
+              onError={() => {
+                toast("Login Failed", {
+                  autoClose: 1000,
+                  type: "error",
+                });
+              }}
+            />
           </div>
         </form>
       </div>
       <div className="imgContainer">
-        <img src={sideImage} alt="" />
+        <img src={sideImage} alt="side-vector" />
       </div>
     </div>
   );

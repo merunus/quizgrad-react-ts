@@ -7,7 +7,7 @@ import {
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
-import { IFields } from "../pages/Register";
+import { IFields } from "../../pages/Register";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 type FormProps = {
