@@ -59,10 +59,7 @@ const AllModulesContainer: React.FC = () => {
         >
           {allModules}
         </div>
-      ) : (
-        <NoModules />
-      )}
-      {isLoading && (
+      ) : isLoading ? (
         <div
           className={
             isGrid ? "modules modules--gridView" : "modules modules--listView"
@@ -70,6 +67,8 @@ const AllModulesContainer: React.FC = () => {
         >
           {skeletons}
         </div>
+      ) : (
+        <NoModules />
       )}
     </section>
   );

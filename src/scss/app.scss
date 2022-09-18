@@ -194,6 +194,9 @@ body {
           margin-left: 5px;
           cursor: pointer;
         }
+        @media (max-width: 500px) {
+          margin-top: 15px;
+        }
       }
       @media (max-width: 500px) {
         flex-direction: column;

@@ -26,8 +26,6 @@ export interface IFields {
   password: string;
 }
 
-
-
 const Register: React.FC = () => {
   const { isMember, user } = useAppSelector(selectUserData);
   const dispatch = useAppDispatch();
