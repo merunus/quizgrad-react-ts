@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const customAxios = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "https://quizgrad-backend.vercel.app/",
 });
 
 customAxios.interceptors.request.use((config: AxiosRequestConfig) => {
